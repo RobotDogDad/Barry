@@ -21,6 +21,13 @@ unsigned long count;
 
 unsigned long ControllerMillis;
 
+typedef struct
+{
+  float corrected_angle;
+}
+displayDef;
+displayDef displayPak;
+
 
 
 void setup() {
@@ -34,7 +41,8 @@ void setup() {
   radio.begin();
   radio.openWritingPipe(addresses[0]); // 00001
   radio.openReadingPipe(1, addresses[1]); // 00002
-  radio.setPALevel(RF24_PA_MIN);
+  radio.setPALevel(RF24_PA_MAX);
+  radio.setChannel(100);
 }
 
 void loop() {
@@ -49,9 +57,13 @@ void loop() {
 
       // check for radio data
   if (radio.available()) {
-      radio.read(&buttonStateIn, sizeof(buttonStateIn));
+      radio.read(&displayPak, sizeof(displayPak));
       ControllerMillis = currentMillis;
+      Serial.println("Incoming Data");
+      Serial.println(displayPak.corrected_angle);
     }
+
+
 
     // is the remote disconnected for too long ?
   if (currentMillis - ControllerMillis > 500) {
@@ -80,9 +92,9 @@ void loop() {
   delay(5);
 
   radio.stopListening();
-  
+  }
   buttonStateOut = 1-digitalRead(buttonOut);
   radio.write(&buttonStateOut, sizeof(buttonStateOut));
     //end of timed radio loop
-  }
+  
 }
