@@ -8,7 +8,7 @@
 #define led_comms_OFF 34
 
 RF24 radio(9, 10, 4000000); // CE, CSN
-const byte addresses[][6] = {"00002", "00001"};
+const byte addresses[][6] = {"00001", "00002"};
 
 boolean buttonStateOut = 0;
 boolean buttonStateIn = 0;
@@ -32,8 +32,8 @@ void setup() {
   Serial.begin(115200);
 
   radio.begin();
-  radio.openWritingPipe(addresses[0]); // 00002
-  radio.openReadingPipe(1, addresses[1]); // 00001
+  radio.openWritingPipe(addresses[0]); // 00001
+  radio.openReadingPipe(1, addresses[1]); // 00002
   radio.setPALevel(RF24_PA_MIN);
 }
 
