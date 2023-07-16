@@ -2,10 +2,12 @@
 #include <nRF24L01.h>
 #include <RF24.h>
 
-#define buttonOut 39
+#define joy1button 36
 #define led 32
 #define led_comms_ON 33
 #define led_comms_OFF 34
+#define joy1X A15
+#define joy1Y A14
 
 RF24 radio(9, 10, 4000000); // CE, CSN
 const byte addresses[][6] = {"00001", "00002"};
@@ -21,6 +23,8 @@ unsigned long count;
 
 unsigned long ControllerMillis;
 
+
+
 typedef struct
 {
   float corrected_angle;
@@ -28,13 +32,20 @@ typedef struct
 displayDef;
 displayDef displayPak;
 
-
+typedef struct
+{
+  int joy1XValue;
+  int joy1YValue;
+  boolean joy1buttonValue;
+}
+controlDef;
+controlDef controlPak;
 
 void setup() {
-  pinMode(buttonOut, INPUT_PULLUP);
   pinMode(32, OUTPUT);
   pinMode(33, OUTPUT);
   pinMode(34, OUTPUT);
+  pinMode(joy1button, INPUT_PULLUP);
 
   Serial.begin(115200);
 
@@ -93,8 +104,12 @@ void loop() {
 
   radio.stopListening();
   }
-  buttonStateOut = 1-digitalRead(buttonOut);
-  radio.write(&buttonStateOut, sizeof(buttonStateOut));
+
+  controlPak.joy1buttonValue = digitalRead(joy1button);
+  controlPak.joy1XValue = analogRead(joy1X);
+  controlPak.joy1YValue = analogRead(joy1Y);
+  
+  radio.write(&controlPak, sizeof(controlPak));
     //end of timed radio loop
   
 }
