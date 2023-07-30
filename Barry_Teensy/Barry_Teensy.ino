@@ -51,6 +51,15 @@ float corrected_angle;
 displayDef;
 displayDef displayPak;
 
+typedef struct
+{
+  int joy1XValue;
+  int joy1YValue;
+  boolean joy1buttonValue;
+}
+controlDef;
+controlDef controlPak;
+
 
 
 void setup() {
@@ -117,7 +126,7 @@ void loop() {
       fusedPitch += 360;
     }
   
-    // Save to controlPak
+    // Save to displayPak
     displayPak.corrected_angle = (float)fusedPitch;
 
   currentMillis = millis();
@@ -130,7 +139,7 @@ void loop() {
 
       // check for radio data
   if (radio.available()) {
-      radio.read(&buttonStateIn, sizeof(buttonStateIn));
+      radio.read(&controlPak, sizeof(controlPak));
       remoteMillis = currentMillis;
     }
 
@@ -140,7 +149,13 @@ void loop() {
       Serial.println("no data");
   }
   else {
-    commState = 1;      
+    commState = 1;
+    Serial.print("Joystick 1 X Value is: ");
+    Serial.println(controlPak.joy1XValue);
+    Serial.print("Joystick 1 Y Value is: ");
+    Serial.println(controlPak.joy1YValue);
+    Serial.print("Joystick 1 button state is: ");
+    Serial.println(controlPak.joy1buttonValue);
   }
 
   if (buttonStateIn == HIGH) {
@@ -162,9 +177,6 @@ void loop() {
 
   radio.stopListening();
   
-  Serial.print(" Fused Pitch: ");
-  Serial.println(fusedPitch);
-
 
     //end of timed radio loop
   }
