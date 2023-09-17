@@ -1,3 +1,16 @@
+//// MK2 RF Controller
+
+// Teensy 4.1 Microcontroller, 4.5V Input
+// Vin to logic components 3.3v, Vin to LEDs 4.5V
+
+
+//// Pinout
+
+// Pin 0: Digital Input, Left Select
+// Pin 1: Digital Input, Left Bumper
+// Pin 2: Digital Input, Right Select
+// Pin 3: Digital Input, Right Bumper
+
 #include <SPI.h>
 #include <nRF24L01.h>
 #include <RF24.h>
@@ -139,7 +152,7 @@ void loop() {
   radio.write(&controlPak, sizeof(controlPak));
     //end of timed radio loop
 
-  if (RadioTimeDelta < 63) {
+  if (RadioTimeDelta < 125) {
   pixels.setPixelColor(0, pixels.Color(0,5,0));
   pixels.setPixelColor(1, pixels.Color(0,5,0));
   pixels.setPixelColor(2, pixels.Color(0,5,0));
@@ -150,7 +163,7 @@ void loop() {
   pixels.setPixelColor(7, pixels.Color(0,5,0));
   }
 
-  else if (RadioTimeDelta < 125) {
+  else if (RadioTimeDelta < 250) {
   pixels.setPixelColor(0, pixels.Color(0,5,0));
   pixels.setPixelColor(1, pixels.Color(0,5,0));
   pixels.setPixelColor(2, pixels.Color(0,5,0));
@@ -161,7 +174,7 @@ void loop() {
   pixels.setPixelColor(7, pixels.Color(5,0,0));
   }
 
-  else if (RadioTimeDelta < 188) {
+  else if (RadioTimeDelta < 375) {
   pixels.setPixelColor(0, pixels.Color(0,5,0));
   pixels.setPixelColor(1, pixels.Color(0,5,0));
   pixels.setPixelColor(2, pixels.Color(0,5,0));
@@ -172,7 +185,7 @@ void loop() {
   pixels.setPixelColor(7, pixels.Color(5,0,0));
   }
 
-  else if (RadioTimeDelta < 250) {
+  else if (RadioTimeDelta < 500) {
   pixels.setPixelColor(0, pixels.Color(0,5,0));
   pixels.setPixelColor(1, pixels.Color(0,5,0));
   pixels.setPixelColor(2, pixels.Color(0,5,0));
@@ -183,7 +196,7 @@ void loop() {
   pixels.setPixelColor(7, pixels.Color(5,0,0));
   }  
 
-  else if (RadioTimeDelta < 313) {
+  else if (RadioTimeDelta < 625) {
   pixels.setPixelColor(0, pixels.Color(0,5,0));
   pixels.setPixelColor(1, pixels.Color(0,5,0));
   pixels.setPixelColor(2, pixels.Color(0,5,0));
@@ -194,7 +207,7 @@ void loop() {
   pixels.setPixelColor(7, pixels.Color(5,0,0));
   }  
 
-  else if (RadioTimeDelta < 375) {
+  else if (RadioTimeDelta < 750) {
   pixels.setPixelColor(0, pixels.Color(0,5,0));
   pixels.setPixelColor(1, pixels.Color(0,5,0));
   pixels.setPixelColor(2, pixels.Color(0,5,0));
@@ -205,7 +218,7 @@ void loop() {
   pixels.setPixelColor(7, pixels.Color(5,0,0));
   }  
 
-  else if (RadioTimeDelta < 438) {
+  else if (RadioTimeDelta < 875) {
   pixels.setPixelColor(0, pixels.Color(0,5,0));
   pixels.setPixelColor(1, pixels.Color(0,5,0));
   pixels.setPixelColor(2, pixels.Color(5,0,0));
@@ -216,7 +229,7 @@ void loop() {
   pixels.setPixelColor(7, pixels.Color(5,0,0));
   }  
 
-  else if (RadioTimeDelta < 500) {
+  else if (RadioTimeDelta < 1000) {
   pixels.setPixelColor(0, pixels.Color(0,5,0));
   pixels.setPixelColor(1, pixels.Color(5,0,0));
   pixels.setPixelColor(2, pixels.Color(5,0,0));
